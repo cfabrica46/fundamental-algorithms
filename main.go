@@ -9,7 +9,9 @@ func main() {
 
 	fmt.Printf("Debbug1 ~Before to QuickSort:\n~~~%v~~~\n\n", slice)
 
-	quicksort(slice, 0, int8(len(slice)-1))
+	//quicksortRecursive(slice, 0, int8(len(slice)-1))
+
+	quicksortIterative(slice, 0, int8(len(slice)-1))
 
 	fmt.Printf("Debbug2 ~After to QuickSort:\n~~~%v~~~\n\n", slice)
 
@@ -19,19 +21,74 @@ func main() {
 	fmt.Printf("Debbug3 ~After to BinarySearch:\n~~~Index:%d - Value:%d~~~\n\n", indexObjetive, slice[indexObjetive])
 }
 
-func quicksort(slice []int8, lo, hi int8) {
+func quicksortIterative(slice []int8, lo, hi int8) {
+
+	stack := make([]int8, hi-lo+1)
+
+	var top = -1
+
+	top++
+	stack[top] = lo
+	top++
+	stack[top] = hi
+
+	for top >= 0 {
+		hi = stack[top]
+		top--
+		lo = stack[top]
+		top--
+
+		p := partitionIterative(slice, lo, hi)
+
+		if p-1 > lo {
+			top++
+			stack[top] = lo
+			top++
+			stack[top] = p - 1
+		}
+
+		if p+1 < hi {
+			top++
+			stack[top] = p + 1
+			top++
+			stack[top] = hi
+		}
+	}
+
+}
+
+func partitionIterative(slice []int8, lo, hi int8) int8 {
+
+	var pivot = slice[hi]
+
+	var aux = lo - 1
+
+	for i := lo; i <= hi-1; i++ {
+		if slice[i] <= pivot {
+			aux++
+
+			slice[i], slice[aux] = slice[aux], slice[i]
+		}
+	}
+
+	slice[aux+1], slice[hi] = slice[hi], slice[aux+1]
+
+	return aux + 1
+}
+
+func quicksortRecursive(slice []int8, lo, hi int8) {
 	if lo > hi {
 		return
 	}
 
-	indexPivot := partition(slice, lo, hi)
+	indexPivot := partitionRecursive(slice, lo, hi)
 
-	quicksort(slice, lo, indexPivot-1)
-	quicksort(slice, indexPivot+1, hi)
+	quicksortRecursive(slice, lo, indexPivot-1)
+	quicksortRecursive(slice, indexPivot+1, hi)
 
 }
 
-func partition(slice []int8, lo, hi int8) int8 {
+func partitionRecursive(slice []int8, lo, hi int8) int8 {
 	pivot := slice[hi]
 
 	for i := lo; i < hi; i++ {

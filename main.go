@@ -1,27 +1,31 @@
 package main
 
-import "fmt"
+import (
+	"flag"
+)
+
+var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
 
 func main() {
 
 	//Best Order Algorithm: Quick Sort
 	slice := []int8{8, 7, 9, 4, 5, 6, 3, 1, 10, 2}
 
-	fmt.Printf("Debbug1 ~Before to QuickSort:\n~~~%v~~~\n\n", slice)
+	//fmt.Printf("Debbug1 ~Before to QuickSort:\n~~~%v~~~\n\n", slice)
 
-	//quicksortRecursive(slice, 0, int8(len(slice)-1))
+	QuicksortRecursive(slice, 0, int8(len(slice)-1))
 
-	quicksortIterative(slice, 0, int8(len(slice)-1))
+	QuicksortIterative(slice, 0, int8(len(slice)-1))
 
-	fmt.Printf("Debbug2 ~After to QuickSort:\n~~~%v~~~\n\n", slice)
+	//fmt.Printf("Debbug2 ~After to QuickSort:\n~~~%v~~~\n\n", slice)
 
 	//Best Search Algorithm: Binary Search
-	indexObjetive := binarySearch(slice, 0, int8(len(slice)-1), 6)
+	//indexObjetive := binarySearch(slice, 0, int8(len(slice)-1), 6)
 
-	fmt.Printf("Debbug3 ~After to BinarySearch:\n~~~Index:%d - Value:%d~~~\n\n", indexObjetive, slice[indexObjetive])
+	//fmt.Printf("Debbug3 ~After to BinarySearch:\n~~~Index:%d - Value:%d~~~\n\n", indexObjetive, slice[indexObjetive])
 }
 
-func quicksortIterative(slice []int8, lo, hi int8) {
+func QuicksortIterative(slice []int8, lo, hi int8) {
 
 	stack := make([]int8, hi-lo+1)
 
@@ -54,7 +58,6 @@ func quicksortIterative(slice []int8, lo, hi int8) {
 			stack[top] = hi
 		}
 	}
-
 }
 
 func partitionIterative(slice []int8, lo, hi int8) int8 {
@@ -76,16 +79,15 @@ func partitionIterative(slice []int8, lo, hi int8) int8 {
 	return aux + 1
 }
 
-func quicksortRecursive(slice []int8, lo, hi int8) {
+func QuicksortRecursive(slice []int8, lo, hi int8) {
 	if lo > hi {
 		return
 	}
 
 	indexPivot := partitionRecursive(slice, lo, hi)
 
-	quicksortRecursive(slice, lo, indexPivot-1)
-	quicksortRecursive(slice, indexPivot+1, hi)
-
+	QuicksortRecursive(slice, lo, indexPivot-1)
+	QuicksortRecursive(slice, indexPivot+1, hi)
 }
 
 func partitionRecursive(slice []int8, lo, hi int8) int8 {

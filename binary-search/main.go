@@ -1,4 +1,4 @@
-package main
+package binarysearch
 
 func BinarySearch(slice []int8, left, right, objetive int8) int8 {
 	for left <= right {

@@ -1,19 +1,15 @@
 package main
 
-func BinarySearch(slice []int8, left, right, objetive int8) int8 {
-	for left <= right {
-		mid := left + (right-left)/2
+import (
+	"fmt"
 
-		if slice[mid] == objetive {
-			return mid
-		}
+	"github.com/cfabrica46/fundamental-algorithms/recursive"
+)
 
-		if slice[mid] < objetive {
-			left = mid + 1
-		} else {
-			right = mid - 1
-		}
-	}
+func main() {
+	arr := []int8{4, 1, 2, 19, 40, 21}
 
-	return -1
+	recursive.Quicksort(arr, 0, int8(len(arr))-1)
+
+	fmt.Println(arr)
 }

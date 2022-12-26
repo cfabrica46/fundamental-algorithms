@@ -1,17 +1,17 @@
 package recursive
 
-func QuicksortRecursive(slice []int8, lo, hi int8) {
+func Quicksort(slice []int8, lo, hi int8) {
 	if lo > hi {
 		return
 	}
 
-	indexPivot := partitionRecursive(slice, lo, hi)
+	indexPivot := partition(slice, lo, hi)
 
-	QuicksortRecursive(slice, lo, indexPivot-1)
-	QuicksortRecursive(slice, indexPivot+1, hi)
+	Quicksort(slice, lo, indexPivot-1)
+	Quicksort(slice, indexPivot+1, hi)
 }
 
-func partitionRecursive(slice []int8, lo, hi int8) int8 {
+func partition(slice []int8, lo, hi int8) int8 {
 	pivot := slice[hi]
 
 	for i := lo; i < hi; i++ {
